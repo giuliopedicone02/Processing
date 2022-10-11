@@ -29,3 +29,9 @@ int h=100;
 int l=100;
 fill(255,0,0,100);
 rect(width/2,height/2,l,h); //Crea un rettangolo con centro (parametro1,parametro2), parametro 3: larghezza, parametro4: altezza
+
+point(100,200);
+line(100,200,50,80); //Crea una linea dal punto P1(parametro1,parametro2) al punto P2(parametro3,parametro4)
+
+line(0,0,width,height);
+line(0,height,width,0);

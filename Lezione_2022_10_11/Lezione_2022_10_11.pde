@@ -13,7 +13,7 @@ background(128); //Utilizza il metodo Scala di Grigi per cambiare lo sfondo
 //ellipse(250,150,125,250); //Prevede quattro parametri: (x centro, y centro, raggio orizzontale, raggio verticale)
 
 //ellipse(0,0,width,height); //In modalità CORNERS l'ellisse prende tutta la finestra
-
+/*
 noStroke(); //Cancella il bordo dell'ellisse
 stroke(255,0,0); //Imposta il colore del bordo in RGB
 strokeWeight(3); //Imposta lo spessore del bordo, parametro in pixel
@@ -30,8 +30,22 @@ int l=100;
 fill(255,0,0,100);
 rect(width/2,height/2,l,h); //Crea un rettangolo con centro (parametro1,parametro2), parametro 3: larghezza, parametro4: altezza
 
-point(100,200);
-line(100,200,50,80); //Crea una linea dal punto P1(parametro1,parametro2) al punto P2(parametro3,parametro4)
+// point(100,200);
+// line(100,200,50,80); //Crea una linea dal punto P1(parametro1,parametro2) al punto P2(parametro3,parametro4)
 
 line(0,0,width,height);
 line(0,height,width,0);
+
+fill(0,255,0,100);
+triangle(width/2,0,width,height,0,height); //Crea un triangolo con punti P1(parametro1,parametro2), P2(parametro3,parametro4), P3(parametro5, parametro6)
+*/
+
+int q=30;
+int s=width/q;
+colorMode(RGB,width);
+for(int y=s/2;y<=height;y+=s){
+for(int x=s/2;x<=width;x+=s){
+  fill(x,y,0);
+  ellipse(x,y,s,s);
+}
+}

@@ -154,35 +154,26 @@ void draw()
 }
 */
 
-int q=10;
+int q=30;
 int d;
-int b;
 
 void setup()
 {
-  size(500,500);
+  size(800,800);
   d=width/q;
-  colorMode(RGB,width);
   noStroke();
+  noLoop();
 }
 
 void draw()
 {
-  background(255);
-  for(int y=d/2; y<=height; y+=d)
+  background(0,0,255);
+  for(int y=0; y<=height; y+=d)
   {
-    for(int x=d/2; x<=width; x+=d)
+    for(int x=0; x<=width; x+=d)
     {
-      if(dist(x,y,mouseX,mouseY)<d/2)
-      {
-        b=width;
-      }
-      else
-      {
-        b=0;
-      }
-      fill(x,y,b);
-      ellipse(x,y,d,d);
+      fill(random(255),130);
+      rect(x+random(-5,5),y+random(-5,5),d,d);
     }
   }
 }

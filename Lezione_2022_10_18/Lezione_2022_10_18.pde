@@ -43,6 +43,7 @@ void draw(){
 }
 */
 
+/*
 int a=45;
 int va=3;
 int v=5;
@@ -79,4 +80,26 @@ void draw()
   
   x+=v*d; //Velocità sinistra destra
   a+=va*dirA; //Velocità apertura-chiusura bocca
+}*/
+
+void setup()
+{
+  size(500,500);
+  background(0);
+}
+
+void draw()
+{
+  beginShape();
+  fill(255,0,0);
+  stroke(255);
+  strokeWeight(2);
+  vertex(180,82);
+  vertex(207,36);
+  vertex(214,63);
+  vertex(407,11);
+  vertex(412,30);
+  vertex(219,82);
+  vertex(226,109);
+  endShape(CLOSE);
 }

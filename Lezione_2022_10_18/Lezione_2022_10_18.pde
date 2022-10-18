@@ -126,6 +126,7 @@ void draw()
 *  CURVA DI BEZIER
 */
 
+/*
 void setup()
 {
   size(500,500);
@@ -134,7 +135,7 @@ void setup()
 
 void draw()
 {
-  background(255);
+  background(200);
   fill(255,0,0,128);
   stroke(0,0,255);
   strokeWeight(10);
@@ -150,4 +151,38 @@ void draw()
   line(15,290,190,300);
   strokeWeight(2);
   bezier(185,50,mouseX,mouseY,15,290,190,300);
+}
+*/
+
+int q=10;
+int d;
+int b;
+
+void setup()
+{
+  size(500,500);
+  d=width/q;
+  colorMode(RGB,width);
+  noStroke();
+}
+
+void draw()
+{
+  background(255);
+  for(int y=d/2; y<=height; y+=d)
+  {
+    for(int x=d/2; x<=width; x+=d)
+    {
+      if(dist(x,y,mouseX,mouseY)<d/2)
+      {
+        b=width;
+      }
+      else
+      {
+        b=0;
+      }
+      fill(x,y,b);
+      ellipse(x,y,d,d);
+    }
+  }
 }

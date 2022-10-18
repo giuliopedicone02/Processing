@@ -1,3 +1,7 @@
+/*
+*  INTRODUZIONE ALLE FUNZIONI setup() E draw()
+*/
+
 /*size(500,500);
 background(random(255),random(255),random(255));
 
@@ -17,6 +21,10 @@ void draw(){
   println("Sono nel draw e sono passati: "+frameCount+" frame e "+millis()/1000+" secondi");
   
 }
+*/
+
+/*
+*  INTRODUZIONE ALLE ANIMAZIONI
 */
 
 /*
@@ -41,6 +49,10 @@ void draw(){
   }
   x+=v*dir;
 }
+*/
+
+/*
+*  PACMAN
 */
 
 /*
@@ -82,6 +94,11 @@ void draw()
   a+=va*dirA; //Velocità apertura-chiusura bocca
 }*/
 
+/*
+*  FRECCIA TRA beginShape() ed endShape()
+*/
+
+/*
 void setup()
 {
   size(500,500);
@@ -102,4 +119,35 @@ void draw()
   vertex(219,82);
   vertex(226,109);
   endShape(CLOSE);
+}
+*/
+
+/*
+*  CURVA DI BEZIER
+*/
+
+void setup()
+{
+  size(500,500);
+  noFill();
+}
+
+void draw()
+{
+  background(255);
+  fill(255,0,0,128);
+  stroke(0,0,255);
+  strokeWeight(10);
+  point(185,50);
+  point(190,300);
+  stroke(255,0,0);
+  strokeWeight(10);
+  point(mouseX,mouseY);
+  point(15,290);
+  stroke(0);
+  strokeWeight(1);
+  line(185,50,mouseX,mouseY);
+  line(15,290,190,300);
+  strokeWeight(2);
+  bezier(185,50,mouseX,mouseY,15,290,190,300);
 }

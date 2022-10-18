@@ -19,6 +19,7 @@ void draw(){
 }
 */
 
+/*
 void setup(){
   size(500,500);
   strokeWeight(4);
@@ -32,10 +33,29 @@ void draw(){
   background(255);
   line(x,0,x,height);
   line(0,x,width,x);
+  
   if(x<0 || x>=width)
   {
     //x=0;
     dir=-dir;
   }
   x+=v*dir;
+}
+*/
+
+int a=45;
+int va=3;
+int dirA=1;
+
+void setup(){
+  size(500,500);
+  fill(255,255,0);
+}
+void draw(){
+  background(0);
+  arc(width/2,height/2,100,100,radians(a),radians(360-a));
+  if(a<0 || a>=45){
+    dirA=-dirA;
+  }
+  a+=va*dirA;
 }

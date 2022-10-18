@@ -2,7 +2,7 @@
 ![Logo](https://images.squarespace-cdn.com/content/v1/60056c48dfad4a3649200fc0/1613294634908-3HTA3TR74HYYSNEIZSIJ/UniCT-Logo.jpg?format=1000w)
 
 
-# Interazione e Multimedia (A.A. 2022-23 Allegra D.)
+# Interazione e Multimedia (A.A. 2022-23 Allegra D. - Di Silvestro L.)
 
 Repository creata a scopo didattico per essere utilizzata come backup dei file creati a lezione.
 

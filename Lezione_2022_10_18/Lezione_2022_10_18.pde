@@ -45,7 +45,7 @@ void draw(){
 
 int a=45;
 int va=3;
-int v=3;
+int v=5;
 int dirA=1;
 int x;
 int d=1;
@@ -55,7 +55,8 @@ void setup(){
   x=width/2;
   fill(255,255,0);
 }
-void draw(){
+void draw()
+{
   background(0);
   
   if(d>0){
@@ -76,6 +77,6 @@ void draw(){
     d=-d;
   }
   
-  x+=v*d;
-  a+=va*dirA;
+  x+=v*d; //Velocità sinistra destra
+  a+=va*dirA; //Velocità apertura-chiusura bocca
 }

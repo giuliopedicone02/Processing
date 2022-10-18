@@ -156,13 +156,13 @@ void draw()
 
 int q=30;
 int d;
+int r=50;
 
 void setup()
 {
   size(800,800);
   d=width/q;
   noStroke();
-  noLoop();
 }
 
 void draw()
@@ -176,4 +176,8 @@ void draw()
       rect(x+random(-5,5),y+random(-5,5),d,d);
     }
   }
+  
+  fill(255,0,0);
+  ellipse(width/2,height/2,r,r);
+  r++;
 }

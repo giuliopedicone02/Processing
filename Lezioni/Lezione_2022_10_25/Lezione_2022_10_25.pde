@@ -1,3 +1,8 @@
+/*
+*  CERCHI CONCENTRICI CON MOVIMENTO WASD E FRECCE DIREZIONALI
+*/
+
+/*
 int x;
 int y;
 
@@ -57,4 +62,41 @@ void mouseClicked()
     {
       noLoop();
     }
+}
+
+*/
+
+/*
+*  INTERPOLAZIONE LINEARE lerp(valoreIniziale,valoreFinale,[0,1])
+*/
+
+int x1=20;
+int x2=250;
+int y1=20;
+int y2=400;
+int q=20;
+
+void setup()
+{
+  size(500,500);
+}
+
+void draw()
+{
+  background(255);
+  stroke(0);
+  strokeWeight(1);
+  line(x1,y1,x2,y2);
+  stroke(255,0,0);
+  strokeWeight(5);
+  
+  for(int i=0; i<=q;i++)
+  {
+    float x=lerp(x1,x2,(1.0/q)*i);
+    float y=lerp(y1,y2,(1.0/q)*i);
+    
+    point(x,y);
+  }
+  
+  ellipse(mouseX,mouseY,50,50);
 }

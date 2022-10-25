@@ -1,6 +1,6 @@
 /*
 *  CERCHI CONCENTRICI CON MOVIMENTO WASD E FRECCE DIREZIONALI
-*/
+ */
 
 /*
 int x;
@@ -8,7 +8,7 @@ int y;
 
 void setup()
 {
-  size(500,500);
+  size(500, 500);
   x=width/2;
   y=width/2;
   noStroke();
@@ -17,58 +17,59 @@ void setup()
 void draw()
 {
   background(255);
-  
-  for(int d=width; d>=50;d-=30)
+
+  for (int d=width; d>=50; d-=30)
   {
-    fill(random(255),random(255),random(255));
-    ellipse(x,y,d,d);
+    fill(random(255), random(255), random(255));
+    ellipse(x, y, d, d);
   }
-  
-  if(keyPressed)
+
+  if (keyPressed)
   {
-    if(key=='a'||(key==CODED && keyCode==LEFT))
+    if (key=='a'||(key==CODED && keyCode==LEFT))
     {
       x-=3;
     }
-    if(key=='d'||(key==CODED && keyCode==RIGHT))
+    if (key=='d'||(key==CODED && keyCode==RIGHT))
     {
       x+=3;
     }
-    if(key=='w'||(key==CODED && keyCode==UP))
+    if (key=='w'||(key==CODED && keyCode==UP))
     {
       y-=3;
     }
-    if(key=='s'||(key==CODED && keyCode==DOWN))
+    if (key=='s'||(key==CODED && keyCode==DOWN))
     {
       y+=3;
     }
   }
-  
 }
 
 boolean go=true;
 
 void mouseClicked()
 {
-  if(mouseButton==LEFT)
-    {
-      go=!go;
-    }
-    
-    if(go)
-    {
-      loop();
-    }else
-    {
-      noLoop();
-    }
+  if (mouseButton==LEFT)
+  {
+    go=!go;
+  }
+
+  if (go)
+  {
+    loop();
+  } else
+  {
+    noLoop();
+  }
 }
 
-*/
 
+*/
 /*
 *  INTERPOLAZIONE LINEARE lerp(valoreIniziale,valoreFinale,[0,1])
-*/
+ */
+ 
+/*
 
 int x1=20;
 int x2=250;
@@ -78,7 +79,7 @@ int q=20;
 
 void setup()
 {
-  size(500,500);
+  size(500, 500);
 }
 
 void draw()
@@ -86,17 +87,43 @@ void draw()
   background(255);
   stroke(0);
   strokeWeight(1);
-  line(x1,y1,x2,y2);
-  stroke(255,0,0);
+  line(x1, y1, x2, y2);
+  stroke(255, 0, 0);
   strokeWeight(5);
-  
-  for(int i=0; i<=q;i++)
+
+  for (int i=0; i<=q; i++)
   {
-    float x=lerp(x1,x2,(1.0/q)*i);
-    float y=lerp(y1,y2,(1.0/q)*i);
-    
-    point(x,y);
+    float x=lerp(x1, x2, (1.0/q)*i);
+    float y=lerp(y1, y2, (1.0/q)*i);
+
+    point(x, y);
   }
-  
-  ellipse(mouseX,mouseY,50,50);
 }
+
+*/
+
+/*
+*  INTERPOLAZIONE LINEARE PER MOVIMENTO RALLENTATO
+*/
+
+float x;
+float y;
+
+void setup()
+{
+  size(500,500);
+  noStroke();
+  fill(255);
+  background(0);
+}
+
+void draw()
+{
+  fill(0,50);
+  rect(0,0,width,height);
+  x=lerp(x,mouseX,0.05);
+  y=lerp(y,mouseY,0.05);
+  fill(255);
+  ellipse(x,y,50,50);
+}
+  

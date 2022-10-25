@@ -106,6 +106,8 @@ void draw()
 *  INTERPOLAZIONE LINEARE PER MOVIMENTO RALLENTATO
 */
 
+/*
+
 float x;
 float y;
 
@@ -127,3 +129,47 @@ void draw()
   ellipse(x,y,50,50);
 }
   
+*/
+
+/*
+*  INTERPOLAZIONE LINEARE PER MOVIMENTO RALLENTATO
+*/
+
+void setup()
+{
+  size(500,500);
+  background(255,255);
+  strokeWeight(10);
+  fill(0);
+}
+void draw()
+{
+  if(mousePressed)
+  {
+    //ellipse(mouseX,mouseY,10,10);
+    line(pmouseX,pmouseY,mouseX,mouseY);
+  }
+}
+
+void keyTyped()
+{
+  if(key=='r'||key=='R')
+  {
+    stroke(255,0,0);
+  }
+  
+  if(key=='g'||key=='G')
+  {
+    stroke(0,255,0);
+  }
+  
+  if(key=='b'||key=='B')
+  {
+    stroke(0,0,255);
+  }
+  
+  if(key=='w'||key=='W')
+  {
+    stroke(255,255,255);
+  }
+}

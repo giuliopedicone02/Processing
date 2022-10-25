@@ -15,16 +15,20 @@ void draw()
   }
 }
 
-void mousePressed()
+boolean go=true;
+
+void mouseClicked()
 {
   if(mouseButton==LEFT)
     {
-      noLoop();
+      go=!go;
     }
     
-    if(mouseButton==RIGHT)
+    if(go)
     {
       loop();
+    }else
+    {
+      noLoop();
     }
-  
 }

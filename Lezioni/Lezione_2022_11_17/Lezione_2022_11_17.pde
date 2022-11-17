@@ -140,6 +140,11 @@ void draw()
   fill(0,30);
   rect(0,0,width,height);
   
+  for(Ball b:bs)
+  {
+    b.run();
+  }
+  
 }
 
 void keyPressed()

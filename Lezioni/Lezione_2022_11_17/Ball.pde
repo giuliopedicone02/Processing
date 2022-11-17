@@ -42,7 +42,7 @@ class Ball
       sx=-sx;
     }
     
-    if(x<=size/2||x>=height-size/2)
+    if(y<=size/2||y>=height-size/2)
     {
       sy=-sy;
     }

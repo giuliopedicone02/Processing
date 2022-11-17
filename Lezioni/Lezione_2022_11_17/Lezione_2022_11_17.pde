@@ -70,12 +70,43 @@ float x;
  }
  }
  */
- 
- /*
+
+/*
      ROTAZIONE INTORNO AD UN PUNTO
  */
- 
+
+/*
 int a=0;
+ void setup()
+ {
+ size(500, 500);
+ rectMode(CENTER);
+ }
+ 
+ void draw()
+ {
+ background(0);
+ translate(width/2,height/2);
+ rotate(radians(a/2));
+ pushMatrix();
+ translate(100, 0);
+ rotate(radians(a));
+ fill(255);
+ rect(0, 0, 50, 50);
+ popMatrix();
+ //fill(255,255,0);
+ //rect(width/2+50,height/2,50,50);
+ a-=3;
+ }
+ 
+ */
+ 
+ /*
+ *  Scale(), ShearX(), ShearY()
+ */
+
+float s=1;
+
 void setup()
 {
   size(500, 500);
@@ -85,15 +116,10 @@ void setup()
 void draw()
 {
   background(0);
-  translate(width/2,height/2);
-  rotate(radians(a/2));
-  pushMatrix();
-    translate(100, 0);
-    rotate(radians(a));
-    fill(255);
-    rect(0, 0, 50, 50);
-  popMatrix();
-  //fill(255,255,0);
-  //rect(width/2+50,height/2,50,50);
-  a-=3;
+  translate(width/2, height/2);
+  scale(s);
+  shearX(s);
+  shearY(s);
+  rect(0, 0, 50, 50);
+  s+=0.01;
 }

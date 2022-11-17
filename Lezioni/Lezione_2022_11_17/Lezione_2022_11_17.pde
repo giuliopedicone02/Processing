@@ -39,30 +39,61 @@
  }
  }*/
 
-float x;
-float y=20;
-float s=0;
-float g=0.1;
+/*
+*  RETTANGOLO CHE RIMBALZA
+ */
 
+/*
+float x;
+ float y=20;
+ float s=0;
+ float g=0.1;
+ 
+ void setup()
+ {
+ size(500, 300);
+ x=width/2;
+ rectMode(CENTER);
+ }
+ 
+ void draw()
+ {
+ background(0);
+ rect(x, y, 20, 20);
+ y+=s;
+ s+=g;
+ 
+ if (y>height)
+ {
+ s*=-0.95;
+ y=height;
+ }
+ }
+ */
+ 
+ /*
+     ROTAZIONE INTORNO AD UN PUNTO
+ */
+ 
+int a=0;
 void setup()
 {
-  size(500, 300);
-  x=width/2;
+  size(500, 500);
   rectMode(CENTER);
 }
 
 void draw()
 {
   background(0);
-  rect(x, y, 20, 20);
-  y+=s;
-  s+=g;
-
-  if (y>height)
-  {
-    s*=-0.95;
-    y=height;
-  }
-  
-
+  translate(width/2,height/2);
+  rotate(radians(a/2));
+  pushMatrix();
+    translate(100, 0);
+    rotate(radians(a));
+    fill(255);
+    rect(0, 0, 50, 50);
+  popMatrix();
+  //fill(255,255,0);
+  //rect(width/2+50,height/2,50,50);
+  a-=3;
 }

@@ -105,6 +105,7 @@ int a=0;
  *  Scale(), ShearX(), ShearY()
  */
 
+/*
 float s=1;
 
 void setup()
@@ -122,4 +123,37 @@ void draw()
   shearY(s);
   rect(0, 0, 50, 50);
   s+=0.01;
+}
+*/
+ArrayList <Ball> bs;
+
+void setup()
+{
+  size(800,500);
+  background(0);
+  bs=new ArrayList<Ball>();
+}
+
+void draw()
+{
+  noStroke();
+  fill(0,30);
+  rect(0,0,width,height);
+  
+}
+
+void keyPressed()
+{
+  if(key=='B'||key=='b')
+  {
+    bs.add(new Ball(random(30,width-30),random(30,height-30),random(20,60),random(1,10),random(1,10)));
+  }
+  if(key=='G'||key=='g')
+  {
+    bs.add(new GreenBall(random(30,width-30),random(30,height-30),random(20,60),random(1,10),random(1,10)));
+  }
+  if(key=='r'||key=='R')
+  {
+    setup();
+  }
 }

@@ -115,21 +115,104 @@ PImage I;
 * OPERAZIONI PUNTUALI
  */
 
+/*
 PImage I;
-color c, c1;
-int ar;
+ color c, c1;
+ int ar;
+ 
+ void setup()
+ {
+ I=loadImage("lena.png");
+ size(512, 512);
+ ar=0;
+ c=color(255, 255, 0);
+ I.loadPixels();
+ 
+ for (int i=0; i<I.width; i++)
+ {
+ I.pixels[pos(i, i, I.width)]=c; //Imposto la diagonale principale gialla
+ }
+ 
+ I.updatePixels();
+ }
+ 
+ void draw()
+ {
+ image(I, 0, 0);
+ }
+ 
+ void keyPressed()
+ {
+ if (key=='r'||key=='R')
+ {
+ if (key=='r')
+ {
+ ar--;
+ } else if (key=='R')
+ {
+ ar++;
+ }
+ 
+ 
+ I.loadPixels();
+ 
+ for (int i=0; i<I.pixels.length; i++) // Per le operazioni puntuali è necessario un ciclo for, due per quelle locali
+ {
+ c1=I.pixels[i];
+ c1=color(red(c1)+ar, green(c1), blue(c1));
+ I.pixels[i]=c1;
+ }
+ 
+ I.updatePixels();
+ println(ar);
+ }
+ 
+ if (key=='i') //Inversione colore immagine
+ {
+ I.loadPixels();
+ 
+ for (int i=0; i<I.pixels.length; i++) // Per le operazioni puntuali è necessario un ciclo for, due per quelle locali
+ {
+ c1=I.pixels[i];
+ c1=255-color(red(c1), green(c1), blue(c1));
+ I.pixels[i]=c1;
+ }
+ 
+ I.updatePixels();
+ }
+ 
+ if (key=='0') //Reset
+ {
+ setup();
+ }
+ }
+ 
+ int pos(int x, int y, int w)
+ {
+ return y*w+x;
+ }
+ */
+
+/*
+*  CREAZIONE DI UN IMMAGINE
+ */
+
+PImage I;
+color c;
 
 void setup()
 {
-  I=loadImage("lena.png");
-  size(512, 512);
-  ar=0;
-  c=color(255, 255, 0);
+  I=createImage(500, 500, RGB);
+  size(500, 500);
   I.loadPixels();
 
-  for (int i=0; i<I.width; i++)
+  for (int x=0; x<I.width; x++)
   {
-    I.pixels[pos(i, i, I.width)]=c; //Imposto la diagonale principale gialla
+    for (int y=0; y<I.height; y++)
+    {
+      c=color(lerp(0, 255, float(x)/width), lerp(0, 255, float(y)/height), 0); //lerp interpolazione lineare tra 0 e 255 del terzo parametro
+      I.pixels[pos(x, y, I.width)]=c;
+    }
   }
 
   I.updatePixels();
@@ -137,56 +220,27 @@ void setup()
 
 void draw()
 {
+  up(mouseX);
   image(I, 0, 0);
-}
-
-void keyPressed()
-{
-  if (key=='r'||key=='R')
-  {
-    if (key=='r')
-    {
-      ar--;
-    } else if (key=='R')
-    {
-      ar++;
-    }
-
-
-    I.loadPixels();
-
-    for (int i=0; i<I.pixels.length; i++) // Per le operazioni puntuali è necessario un ciclo for, due per quelle locali
-    {
-      c1=I.pixels[i];
-      c1=color(red(c1)+ar, green(c1), blue(c1));
-      I.pixels[i]=c1;
-    }
-
-    I.updatePixels();
-    println(ar);
-  }
-
-  if (key=='i') //Inversione colore immagine
-  {
-    I.loadPixels();
-
-    for (int i=0; i<I.pixels.length; i++) // Per le operazioni puntuali è necessario un ciclo for, due per quelle locali
-    {
-      c1=I.pixels[i];
-      c1=255-color(red(c1), green(c1), blue(c1));
-      I.pixels[i]=c1;
-    }
-
-    I.updatePixels();
-  }
-
-  if (key=='0') //Reset
-  {
-    setup();
-  }
 }
 
 int pos(int x, int y, int w)
 {
-  return y*w+x;
+  return x+y*w;
+}
+
+void up(int mx)
+{
+  I.loadPixels();
+
+  for (int x=0; x<I.width; x++)
+  {
+    for (int y=0; y<I.height; y++)
+    {
+      c=color(lerp(0, 255, float(x)/width), lerp(0, 255, float(y)/height), lerp(0,255,float(mx)/width));
+      I.pixels[pos(x, y, I.width)]=c;
+    }
+  }
+
+  I.updatePixels();
 }

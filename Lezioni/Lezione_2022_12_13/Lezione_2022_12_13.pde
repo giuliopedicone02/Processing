@@ -82,29 +82,111 @@ PImage I;
  }
  }
  */
- 
+
 /*
 *  COLOR PICKER
-*/
+ */
+
+/*
+PImage I;
+ color c;
+ int x, y;
+ 
+ void setup()
+ {
+ size(500, 500);
+ I=loadImage("lena.png");
+ I.resize(200, 200);
+ c=color(0);
+ x=width/2-I.width/2;
+ y=height/2-I.height/2;
+ }
+ 
+ void draw()
+ {
+ background(c);
+ c=I.get(mouseX-x, mouseY-y);
+ image(I,x,y);
+ println("R: "+red(c)+", G: "+green(c)+", B: "+blue(c));
+ }
+ */
+
+/*
+* OPERAZIONI PUNTUALI
+ */
 
 PImage I;
-color c;
-int x, y;
+color c, c1;
+int ar;
 
 void setup()
 {
-  size(500, 500);
   I=loadImage("lena.png");
-  I.resize(200, 200);
-  c=color(0);
-  x=width/2-I.width/2;
-  y=height/2-I.height/2;
+  size(512, 512);
+  ar=0;
+  c=color(255, 255, 0);
+  I.loadPixels();
+
+  for (int i=0; i<I.width; i++)
+  {
+    I.pixels[pos(i, i, I.width)]=c; //Imposto la diagonale principale gialla
+  }
+
+  I.updatePixels();
 }
 
 void draw()
 {
-  background(c);
-  c=I.get(mouseX-x, mouseY-y);
-  image(I,x,y);
-  println("R: "+red(c)+", G: "+green(c)+", B: "+blue(c));
+  image(I, 0, 0);
+}
+
+void keyPressed()
+{
+  if (key=='r'||key=='R')
+  {
+    if (key=='r')
+    {
+      ar--;
+    } else if (key=='R')
+    {
+      ar++;
+    }
+
+
+    I.loadPixels();
+
+    for (int i=0; i<I.pixels.length; i++) // Per le operazioni puntuali è necessario un ciclo for, due per quelle locali
+    {
+      c1=I.pixels[i];
+      c1=color(red(c1)+ar, green(c1), blue(c1));
+      I.pixels[i]=c1;
+    }
+
+    I.updatePixels();
+    println(ar);
+  }
+
+  if (key=='i') //Inversione colore immagine
+  {
+    I.loadPixels();
+
+    for (int i=0; i<I.pixels.length; i++) // Per le operazioni puntuali è necessario un ciclo for, due per quelle locali
+    {
+      c1=I.pixels[i];
+      c1=255-color(red(c1), green(c1), blue(c1));
+      I.pixels[i]=c1;
+    }
+
+    I.updatePixels();
+  }
+
+  if (key=='0') //Reset
+  {
+    setup();
+  }
+}
+
+int pos(int x, int y, int w)
+{
+  return y*w+x;
 }

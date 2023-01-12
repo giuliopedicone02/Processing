@@ -69,6 +69,7 @@
 *  MSE e PSNR
  */
 
+/*
 PImage Im, Ic, Ir;
 float mseO, mseP, mseR, psnrO, psnrP, psnrR;
 
@@ -133,3 +134,11 @@ float PSNR(PImage I1, PImage I2)
 
   return res;
 }
+
+*/
+
+/*
+* OPERAZIONI AFFINI - Rotazione
+*/
+
+// Da ricopiare successivamente

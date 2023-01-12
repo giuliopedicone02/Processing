@@ -1,0 +1,30 @@
+Definizione: Si dice risoluzione il numero di pixel per unità di misura
+
+Si può misurare in:
+dpi: pixel al centimetro o dots per inch
+megapixel: numero di pixel su tutta l'immagine
+
+Indica il grado di qualità di un immagine.
+
+Ci sono due differenti situazioni:
+1) Risoluzione dell'apparecchiatura di ripresa
+2) Risoluzione dell'apparecchiatura di resa
+
+
+--- Risoluzione dell'apparecchiatura di ripresa ---
+
+Si contano quanti sensori ci sono per unità di misura.
+
+Scanner: fino a 6000 DPI
+Fotocamere: numero di sensori presenti in un circuito di ripresa (MEGAPIXEL)
+
+--- Risoluzione dell'apparecchiatura di resa ---
+
+Si contano quanti sensori ci sono per unità di misura.
+
+Stampanti: fino a 3000 dpi
+Schermi: numero di elementi sullo schermo per unità di misura. Tipicamente 72 dpi
+
+
+
+

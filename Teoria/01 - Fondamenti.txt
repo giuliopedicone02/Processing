@@ -1,0 +1,43 @@
+--- Rappresentazione di un immagine ---
+
+x e y coordinate spaziali
+f(x,y) = i(x,y) r(x,y)
+i = luce incidente
+r = luce riflessa
+
+-----------------------------
+Immagini vettoriali e raster
+
+Raster: Disegno a mani libere (Quali puntini devo colorare?)
+Vettoriale: Disegno tecnico (Quale linee devo tracciare?)
+
+--- Raster ---
+Pro:
+- Fotorealismo 
+- Standard sul web
+
+Contro:
+- Nessuna descrizione semantica
+- Grandi dimensioni
+
+--- Vettoriali ---
+
+Pro:
+- Trasformazioni sul piano semplici (zooming, scaling, rotating)
+
+Contro:
+- Non fotorealistico
+- Formati vettoriali proprietari
+
+--- Pixel ---
+Definizione: Valore quantizzato misurato da un sensore
+
+--- Tipologie di immagini ---
+
+Bianco e nero: 1 bit per pixel (i,j) {0,1}
+Scala di grigio: 8 bit per pixel (i,j) {0,255}
+A colori: 8 bit per canale (i,j) -> (x,y,z) x:{0,255}, y:{0,255}, z:{0,255}
+
+
+
+

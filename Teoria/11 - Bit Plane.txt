@@ -1,0 +1,119 @@
+--- Bit Plane ---
+
+Serve a trasformare immagini ad n-bit in n-immagini binarie
+
++--------------------+
+| Immagine originale |
++----------+---------+
+|    255   |    1    |
++----------+---------+
+|     8    |    64   |
++----------+---------+
+
++----------------------+
+| Immagine binarizzata |
++-----------+----------+
+|  11111111 | 00000001 |
++-----------+----------+
+|  00001000 | 01000000 |
++-----------+----------+
+
++-------+
+| Bit 0 |
++---+---+
+| 1 | 1 |
++---+---+
+| 0 | 0 |
++---+---+
+
++-------+
+| Bit 1 |
++---+---+
+| 1 | 0 |
++---+---+
+| 0 | 0 |
++---+---+
+
++-------+
+| Bit 3 |
++---+---+
+| 1 | 0 |
++---+---+
+| 1 | 0 |
++---+---+
+
++-------+
+| Bit 6 |
++---+---+
+| 1 | 0 |
++---+---+
+| 0 | 1 |
++---+---+
+
+I bit più significativi contengono informazioni sulla struttura dell'immagine.
+I bit meno significativi forniscono i dettagli più piccoli.
+
+Attenzione: Vale solo per codifiche in binario puro, NON gray code o altri!
+
+Vantaggi:
+Utile per eliminare tutti i grigi compresi tra 32 e 64 (ponendo il quinto bit a 0)
+
+--- Gray Code ---
+
+Utilizzando una codifica in binario puro alcune volte due numeri adiacenti hanno una transizione di bit che si ripercuote su tutti i piani.
+Il Gray Code è una codifica che permette di codificare due numeri adiacenti in modo da farli differire per un solo bit.
+
+Possiamo trasformare una codifica in binario puro in gray code avvalendoci dell'operatore XOR
+
++-----------+
+|    XOR    |
++---+---+---+
+| 0 | 0 | 0 |
++---+---+---+
+| 0 | 1 | 1 |
++---+---+---+
+| 1 | 0 | 1 |
++---+---+---+
+| 1 | 1 | 0 |
++---+---+---+
+
+--- Esempio di codifica da Binario Puro a Gray Code ---
+
++----------+---------+----------+
+| Decimale | Binario | GrayCode |
++----------+---------+----------+
+|     0    |   000   |    000   |
++----------+---------+----------+
+|     1    |   001   |    001   |
++----------+---------+----------+
+|     2    |   010   |    011   |
++----------+---------+----------+
+|     3    |   011   |    010   |
++----------+---------+----------+
+|     4    |   100   |    110   |
++----------+---------+----------+
+|     5    |   101   |    111   |
++----------+---------+----------+
+|     6    |   110   |    101   |
++----------+---------+----------+
+|     7    |   111   |    100   |
++----------+---------+----------+
+
+Come trovare il Gray Code di 4 (100)?
+
+1. Ricopio il bit binario più significativo
+
+GC: 1??
+
+2. Effettuo la XOR con il primo (1) ed il secondo bit (0) più significativo binario
+
+1 XOR 0 = 1
+
+GC: 11?
+
+3. Effettuo la XOR con il secondo bit (0) ed il terzo bit (0) nella codifica binaria
+
+0 XOR 0 = 0
+
+GC: 110
+

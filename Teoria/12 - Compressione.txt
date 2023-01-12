@@ -1,0 +1,83 @@
+--- Compressione ---
+
+Tecnica che permette la riduzione della quantità di bit necessari per memorizzare un informazione.
+
+Permette di eliminare i dati ridondanti presenti all'interno di un informazione.
+
+--- Ridondanza della codifica ---
+
+Un codice è un sistema di simboli utili per rappresentare informazioni.
+Ogni pezzo di informazione è associato ad un simbolo della sequenza chiamata "codeword".
+
+Il numero di bit presenti in un codice è la sua lunghezza.
+
+--- Algoritmo di compressione ---
+
+Definizione: Un algoritmo di compressione è una tecnica che eilimina la ridondanza di informazione dai dati e consente un risparmio di memoria.
+
+--- Compressione Lossy e Lossless ---
+
+Lossless (o reversibile): avviene senza perdita di informazione
+Lossy (o irreversibile): avviene con una perdita di informazione (es: rimuovere i bit meno significativi nei bit plane).
+
+--- Compressione Lossless ---
+
+Si parla di compressione LOSSLESS quando i dati possono essere trasformati in modo da essere memorizzati con risparmio di memoria 
+e successivamente ricostruiti perfettamente, senza errore e senza perdita di informazioni.
+
+Utilizzata spesso nei formati .png e .txt
+
+ATTENZIONE: i file di testo possono essere compressi solo in LOSSLESS.
+
+--- Frequenza ---
+
+Numero di volte in cui è presente un simbolo all'interno di una sequenza.
+
+Formula: f(i) = numero di occorrenze di a(i)/N
+
+--- Entropia ---
+
+Quantità media di informazione associata ad un simbolo nella frequenza.
+
+Formula: -(f(0)*log2(f(0)) + f(1)*log2(f(1)) + f(2)*log2(f(2)) + ... + f(n) *log2(f(n)))
+
+NB: Entropia massima se i simboli nella codeword sono equiprobabili.
+
+--- Teorema di Shannon ---
+
+"Per una sorgente discreta ed a memoria zero, il bitrate minimo è pari all'entropia della sorgente"
+
+Minimo numero di bit necessari: N*E
+
+N: Numero di bit
+E: Entropia 
+
+Esercizio: 
+Data una stringa di 7 caratteri con entropia pari a 2 bit, calcolare il numero di bit necessari per memorizzare tale stringa senza perdita di informazione.
+Soluzione: N*E = 7*2 = 14
+--- Codifica di Huffman ---
+
+Proprietà:
+
+1. Associa a simboli più frequenti codici corti ed a simboli meno frequnti codici lunghi.
+2. Nessun codice è prefisso di altri codici.
+3. Tende al limite di Shannon con un eccesso al più di qualche bit.
+
+Esempi: vedi allegato 12a
+
+--- Codifica Run-Length ---
+
+Codifica utile in caso di informazioni in cui si hanno molte ripetizioni.
+Ogni valore codificato è il numero di volte in cui si presenta lo stesso simbolo consecutivamente.
+
+Esempio:
+
+0000110111111 => 4216
+
+Il bit 0 si presenta 4 volte consecutivamente
+Il bit 1 si presenta 2 volte consecutivamente
+Il bit 0 si presenta 1 volta 
+Il bit 1 si presenta 6 volte consecutivamente
+
+
+

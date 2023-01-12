@@ -8,6 +8,7 @@ Repository creata a scopo didattico per essere utilizzata come backup dei file c
 
 * **Cartella Esercizi**: Contiene soluzioni personali, parzialmente incorrette,degli esercizi sugli argomenti trattati su Processing
 * **Cartella Lezioni**: Contiene gli appunti presi durante le lezioni del corso
+* **Cartella Teoria**: Contiene riassunti personali sugli argomenti teorici trattati durante l'anno accademico
 
 ## Authors
 

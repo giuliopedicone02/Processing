@@ -1,0 +1,220 @@
+--- Spettro elettromagnetico ---
+
+Un raggio luminoso che attraversa un prisma, riproduce uno spettro di colori che va dal violetto al rosso.
+
+Lo spettro del visibile appartiene al range delle onde elettromagnetiche con lunghezza d'onda tra 10^3 e 10^2 nanometri
+
+Per descrivere la luce bastano i seguenti valori:
+- Radianza: quantità di luce emessa
+- Luminanza: quantità di energia percepita dall'utente
+- Brillantezza: sensazione di colore
+
+--- Coni S,M,L ---
+
+Tipo S: Sensibili alle lunghezze d'onda corte (viola-blu)
+Tipo M: Sensibili alle lunghezze d'onda medie (verdi)
+Tipo L: Sensibili alle lunghezze d'onda lunghe (rosse)
+
+--- TEORIA DEL TRISTIMOLO (FALSA)---
+
+Tutti i colori si possono ottenere mescolando tre colori fondamentali in proprozioni differenti.
+
+I valori del tristimolo XYZ si ottengono tramite integrali definiti tra 380 e 780 (vedi formulario).
+N.B: Formule utili solo per la luce emessa e non riflessa!
+
+--- Illuminanti ---
+
+Definizione: Energia radiante con distribuzione spettrale di energia relativa definita nel campo di lunghezza d'onda capace di influenzare la visione di colore degli oggetti.
+
+Alcuni illuminanti:
+A: Luce incandescente 
+B: Luce diretta del sole a mezzogiorno
+C: Luce entrante da una finestra posta a nord
+D65: Luce diurna a mezzogiorno all'equatore (6500K)
+
+--- Diagramma cromatico CIE ---
+
+x: quantità di rosso
+y: quantità di verde
+z: quantità di blu (z=1-(x+y))
+
+--- Color Gamut ---
+
+Conferma il fatto che la teoria del tristimolo è falsa.
+Unendo con un triangolo i punti R G B questo non ricopre tutta l'area dei colori del diagramma croimatico.
+
+--- Formule per il calcolo di XYZ e xyz ---
+
+X = x*(X+Y+Z)
+Y = y*(X+Y+Z)
+Z = z*(X+Y+Z)
+
+x = X/(X+Y+Z)
+y = Y/(X+Y+Z)
+z = Z/(X+Y+Z) (oppure 1-(x+y))
+
+--- Modello CIE L*a*b* ---
+
+Spazio di colore luminanza-crominanza percettivamente uniforme.
+Significa che dati due colori C1 e C2,
+considerate le distanze ∆C allora:
+C3 = C1 + ∆C
+C4 = C2 + ∆C
+
+Allora supponendo distanze quantitativamente uguali, C3 e C4 sarebbero percepiti ugualmente da C1 e C2
+
+N.B: x+y+z=1
+
+L*=116(Y/Yn)^1/3
+a*=500((X/Xn)^1/3-(Y/Yn)^1/3)
+b*=200((Y/Yn)^1/3-(Z/Zn)^1/3)
+
+--- Distanza euclidea ---
+
+∆E = sqrt((∆L)^2+(∆a)^2+(∆b)^2)
+
+--- Spazio di colore L*C*h
+
+Chroma: sqrt(a^2+b^2)
+Hue: tan^-1(b/a)
+
+--- Coordinate del nero matematico e del bianco equienergetico ---
+
+Nero: X=0,Y=0,Z=0
+Bianco: X=1,Y=1,Z=1 oppure x=1/3 y=1/3 z=1/3
+
+--- Modello del pittore ---
+
+La lunghezza d'onda (HUE) il cui picco è resposnabile del colore percepito
+Saturazione: indica quanto il colore è puro (epicco-emedia)/(epicco+emedia)
+
+emedia: lumonosità di una radiazione (valore)
+
+--- Spazio HSV ---
+
+Hue: Colore - copre tutti i colori ordinati in sequenza
+Saturazione: minimo (centro) pari al bianco puro, massimo (periferia) colore puro
+Valore: minimo= nessuna energia ad un massimo
+
+--- Pro e contro del modello del pittore ---
+
+Pro:
+- Intuitivo
+- Percettivamente significativo
+
+Contro:
+- Non lineare
+- Modello a piramide esagonale
+- Numero di colori base indefinito
+
+--- Spazio colore RGB ---
+
+R: Red (Rosso)
+G: Green (Verde)
+B: Blue (Blu)
+
+Presenta una geometria cubica
+
+--- Sintesi additiva ---
+
+Dalla sovrapposizione dei colori RGB si ottiene il bianco (W)
+
+R+G+B=W
+R+G=W-B=Y
+R+B=W-G=M
+B+G=W-R=C
+
+YMC: Colori secondari o complementari
+
+--- Calcolo dei colori complementari ---
+
+C1 = (10,25,30) => (255-10,255-25,255-30) => (245,230,225)
+(245,230,225) + (10,25,30) = (255,255,255)
+
+--- Sintesi sottrattiva (modello CMYK) ---
+
+Sovrapponendo tre filtri di colore YCM viene assorbita tutta la radiazione visibile esi ottiene il nero (K)
+
+Y+M=R
+Y+C=G
+M+C=B
+Y+M+C=K
+
+RGB: Colori primari
+
+--- Pro e contro modello RGB ---
+
+Pro: semplice da usare è uno standard per il web
+Contro: percettivamente poco comodo ed intuitivo
+
+--- Colori per il web ---
+
+00 33 66 99 CC FF
+
+Es: 
+#FF0066 è un colore adatto per il web
+#002233 NON è un colore adatto per il web (22 non viene codificato adeguatamente)
+
+--- Lo spazio YUV ---
+
+Non è uno spazio ma una famiglia di spazi di colore di tipo luminanza-crominanza.
+Un esempio di spazio appartenente alla famiglia YUV è la YCbCr
+
+--- Da RGB a YUV ---
+
+Y = 0.299R+ 0.587G+ 0.114B
+
+U = 0.564(B-Y) => U = −0.169R −0.331G + 0.5B
+V = 0.713(R-Y) => V = +0.5R −0.419G −0.081B
+
+Nota Bene: Se R=G=B allora U=V => Immagine a scala di grigi
+
+Es: Convertire C(RGB) = (1,1,1) in YUV
+
+Y = 0.299(1) + 0.587(1) + 0.114(1) = 1
+U = 0.564(1-1) = 0
+V = 0.713(1-1) = 0
+
+--- Da YUV a YCbCr ---
+YCbCr è uno standard per la codifica delle immagini JPEG
+
+Y (Luminanza) = 0.299R + 0.587G + 0.114B
+Cb (Crominanza del blu) = U + 128
+Cr (Crominanza del rosso) = V + 128
+
+--- Palette ---
+
+Per codificare un immagine RGB abbiamo bisogno di 8 bit per canale
+R: 8 bit + G: 8 bit + B: 8 bit = 24 bit (16 milioni di colori)
+
+Dato che avremo sempre più colori che pixel possiamo decidere di adottare la modalità di codifica dei colori indicizzata o a palette (Look-Up Table o LUT)
+
+Palette Custom (Es. GIF):
+ 
+- Se nell'immagine ci sono meno di 256 colori alcuni verranno replicati
+- Se nell'immagine ci sono più di 256 colori verranno ridotti a 256 scegliendo i più rappresentativi
+
+Palette Standard:
+MAC, WINDOWS, WEB_SAFE, OTTIMIZZATE
+
+--- Re-indexing ---
+
+Consiste nel cambiare la posizione degli indici dei colori della palette per creare una matrice che abbia entropia minima.
+
+Entropia: Informazione media di una sorgente
+
+Ai colori di pixel adiacenti si associano indici numericamente vicini, diminuendo l'entropia e garantendo un miglior rapporto di compressione.
+
+Trovare la disposizione ottimale è un problema NP-Hard, pertanto con gli algoritmi attuali è possibile solo trovare una soluzione ottimale e non ottima.
+
+
+
+
+ 
+
+
+
+
+
+
+

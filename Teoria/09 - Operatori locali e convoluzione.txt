@@ -1,0 +1,177 @@
+--- Operatori locali e convoluzione ---
+
+Operatori locali: 
+Il valore di output dipende da un limitato intorno di un pixel preso in input
+
+--- Invarianza per traslazione (Shift Invariant) ---
+Operatore che si comporta allo stesso modo indipendentemente dalla posizione dei pixel.
+
+--- Operatore negativo (255-I(x,y))
+Attenzione: Questo non è l'operatore negativo f(x,y) = (255-x,255-y) in quanto lavora sulle coordinate
+
+--- Convoluzione ---
+Operazione che gode delle proprietà commutativa ed associativa
+
+ATTENZIONE: Applicabile solo in caso di operatori lineari e shift invariant
+
+L'operatore su una immagine prende il nome di "filtro", e la matrice che ne descrive la risposta all'impulso (PSF) è detta KERNEL
+
+Formule: vedi formulario
+
+--- Filtraggio dei bordi ---
+Soluzioni:
+1. Non fare nulla
+2. Supporre una cornice di 0 intorno all'immagine
+3. Assumere una tipologia toroidale o effetto pacman
+4. Aggiungere una riga/colonna uguale alla riga/colonna precedente
+
+--- Esempi di operatori locali ---
+
+NON LINEARI:
+Mediano: fornisce in uscita il valore mediano dell'intorno del pixel
+Minimo: fornisce il pixel con intensità minore nell'intorno del pixel (incupimento)
+Massimo: fornisce il pixel con intensità maggiore nell'intorno del pixel (schiarimento)
+
+LINEARI:
+
+N-box: Serve a sfocare le immagini
++-----+-----+-----+
+| 1/9 | 1/9 | 1/9 |
++-----+-----+-----+
+| 1/9 | 1/9 | 1/9 |
++-----+-----+-----+
+| 1/9 | 1/9 | 1/9 |
++-----+-----+-----+
+
+N-binomiale: Filtri di smussamento dell'immagine
+
++---+---+---+
+| 1 | 2 | 1 |
++---+---+---+
+| 2 | 4 | 2 | * 1/16
++---+---+---+
+| 1 | 2 | 1 |
++---+---+---+
+
++---+----+----+----+---+
+| 1 | 4  | 6  | 4  | 1 |
++---+----+----+----+---+
+| 4 | 16 | 24 | 16 | 4 |
++---+----+----+----+---+
+| 6 | 24 | 36 | 24 | 6 | * 1/256
++---+----+----+----+---+
+| 4 | 16 | 24 | 16 | 4 |
++---+----+----+----+---+
+| 1 | 4  | 6  | 4  | 1 |
++---+----+----+----+---+
+
+N.B: Denominatore = Somma dei valori della matrice
+
+--- Il rumore ---
+
+Si dividono in:
+- Rumore sale e pepe
+- Rumore Gaussiano
+
+--- Rumore Sale e Pepe ---
+
+p(z){p(a) per z=a, p(b) per z=b, 0 altrimenti}
+
+Per rimuoverlo: Filtro mediano 
+
+--- Rumore Gaussiano ---
+
+Formula: vedi formulario
+Per rimuoverlo: filtro media
+
+--- Media vs Mediano ---
+Il filtro di media tende a creare livelli di grigio prima non esistenti,
+il filtro mediano non introduce artefatti risultando quindi migliore del filtro media.
+
+--- Altri filtri ---
+
+Outlier: Si confronta il valore del pixel centrale con la media dei suoi 8-vicini.
+Se il valore assoluto della differenza è maggiore di una certa soglia,
+allora il punto viene sostituito dal valore medio, altrimenti non viene modificato.
+
+Olimpico: Si scartano minimo e massimo e si fa la media dei vicini
+
+--- Edge Detector ---
+Si dividono in:
+
+-Edge Detector basati sulla derivata prima
+-Edge detector basati sulla derivata seconda
+
+--- Edge Detector basati sulla derivata prima ---
+
+SobelX
++----+----+----+
+| -1 | -2 | -1 |
++----+----+----+
+| 0  | 0  | 0  |
++----+----+----+
+| 1  | 2  | 1  |
++----+----+----+
+
+PrewittX
++----+----+----+
+| -1 | -1 | -1 |
++----+----+----+
+| 0  | 0  | 0  |
++----+----+----+
+| 1  | 1  | 1  |
++----+----+----+
+
+SobelY
++----+----+----+
+| -1 | 0  | 1  |
++----+----+----+
+| -2 | 0  | 2  |
++----+----+----+
+| 1  | 0  | 1  |
++----+----+----+
+
+PrewittY
++----+----+----+
+| -1 | 0  | 1  |
++----+----+----+
+| -1 | 0  | 1  |
++----+----+----+
+| -1 | 0  | 1  |
++----+----+----+
+
+
+Sobel x e Prewitt x forniscono una matrice con i lati orizzontali (e le componenti orizzontali dei lati obliqui) che hanno valori non nulli.
+Sobel y e Prewitt y forniscono una matrice con i lati verticali (e le componenti verticali dei lati obliqui) che hanno valori non nulli.
+
+Le due matrici possono essere combinate insieme mediante la seguente formula: sqrt(Sobel_x^2+Sobel_y^2)
+
+--- Edge Detector basati sulla derivata seconda ---
+
+LaPlaciano:
++----+---+----+
+| -1 | 0 | -1 |
++----+---+----+
+| 0  | 4 | 0  |
++----+---+----+
+| -1 | 0 | -1 |
++----+---+----+
+
+-- Zero-Crossing --
+Dopo aver applicato l’operatore Laplaciano è necessario che si verifichi la condizione di Zero-crossing.
+Cioè, deve sempre accadere che rispetto al punto in questione ci sia nel suo intorno un valore positivo e un valore negativo.
+
+--- Filtri di Sharpening ---
+
+Aumentano la nitidezza di un'immagine aumentandone il contrasto locale (operazione opposta allo sfocamento)
+
+Filtro di Enhancing:
++----+---+----+
+| -1 | 0 | -1 |
++----+---+----+
+| 0  | 5 | 0  |
++----+---+----+
+| -1 | 0 | -1 |
++----+---+----+
+
+N.B: Utilizzarlo comporta un aumento del rumore nell'immagine.

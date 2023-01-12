@@ -1,0 +1,154 @@
+--- Istogramma ---
+
+Permette di conoscere la distribuzione delle frequenze dei toni di grigio di un'immagine
+
+Si indica con H(k) il numero di pixel di valore k
+Sommando tutti gli H si ottiene esattamente MxN
+
+--- Aritmetica sulle immagini ---
+
+Operando aritmeticamente sulle immagini può accadere che un pixel abbia:
+
+1. Un valore negativo
+2. Un valore maggiore del massimo (255)
+3. Un valore non intero
+
+Soluzioni? 
+
+- Settare a 0 i valori < 0 ed a 255 i valori > 255
+- Normalizzazione
+
+--- Normalizzazione ---
+
+Formula: Vn = 255 * (Vo - min)/(max - min)
+
+Vn: Valore normalizzato
+Vo: Valore originale
+min: Valore minimo osservato
+max: Valore massimo osservato
+
+Esempio:
+
++----+----+
+| 20 | 50 |
++----+----+
+| 70 | 90 |
++----+----+
+
+V20 = 255 * (20-20)/(90-20) = 0
+V90 = 255 * (90-20)/(90-20) = 255
+V50 = 255 * (50-20)/(90-20) = 109
+V70 = 255 * (70-20)/(90-20) = 182
+
+--- Equalizzazione (Istogramma uniforme) ---
+
+Processo che rende il contributo di ogni differente tonalità di grigio pressappoco eguale.
+
+Formula: Pr(rk) = nk / MN
+
+Pr: Percentuale di grigio di livello rk
+rk: Livello di grigio
+nk: Numero di pixel nell'immagine di livello rk
+MN: Numero di righe * Numero di colonne
+
+Nota Bene:
+0 <= Pr(rk) <= 1
+Pr(r0) + Pr(r1) + Pr(r2) + ... + (Pr255) = 1 
+
+** Valore di grigio dell'istogramma **
+
+Formula: Sk = T(rk) = (L-1)(Pr(r0)+Pr(r1)+...+Pr(rk))
+
+Nota Bene:
+
+S255 = (256-1)*(Pr(r0) + Pr(r1) + Pr(r2) + ... + (Pr255)) = (256-1)*1 = 255
+S0 = (256 - 1) * (Pr(r0)) = (256 - 1) * 0 = 0
+
+--- Operazioni sulle immagini ---
+
+Solo su immagini in scala di grigio
+In RGB dovremmo ripetere lo stesso lavoro per i tre canali.
+
+Sono operazioni che alterano i valori dei pixel di una immagine.
+
+g(x,y) = T[f(x,y)]
+
+--- Tipi di operazioni ---
+
+- Puntuali (Pixel per Pixel)
+- Locali (Si considerano gli 8 vicini del pixel)
+- Globale (Si considera tutta l'immagine)
+
+--- Operazioni puntuali ---
+
+Si dice operatore puntuale, un operatore che preso in input il valore di UNO ED UN SOLO pixel ne restituisce uno cambiato che dipende esclusivamente dal valore del pixel in ingresso.
+
+Si esprime tramite Look Up Table (LUT) che associa ad ogni valore di pixel in ingresso un valore di pixel in uscita.
+
++---+---+---+---+---+
+|   |   |   |   | X |
++---+---+---+---+---+
+|   |   |   | X |   |
++---+---+---+---+---+
+|   |   | X |   |   |
++---+---+---+---+---+
+|   | X |   |   |   |
++---+---+---+---+---+
+| X |   |   |   |   |
++---+---+---+---+---+
+
+LUT dell'operazione identità
+
+--- Operatore negativo ---
+
+g(x,y) = 255 - f(x,y)
+
++---+---+---+---+---+
+| X |   |   |   |   |
++---+---+---+---+---+
+|   | X |   |   |   |
++---+---+---+---+---+
+|   |   | X |   |   |
++---+---+---+---+---+
+|   |   |   | X |   |
++---+---+---+---+---+
+|   |   |   |   | X |
++---+---+---+---+---+
+
+
+--- Incupimento e schiarimento ---
+
+Incupimento: log^-1
+Schiarimento: log
+
+--- Trasformazione logaritmica ---
+
+g(x,y) = c * log(1 + f(x,y))
+
+c: costante che normalizza il valore in [0,255] = 255/log(256)
+
+--- Trasformazione di potenza ---
+
+g(x,y) = c * f(x,y)^a
+
+c: costante che normalizza il valore in [0,255] = 255/(255^a) = 1/(255^(a-1))
+
+Nota Bene:
+
+a<1 : Schiarimento
+a=1: g(x,y) = f(x,y)
+a>1: Incupimento
+
+--- Binarizzazione ---
+
+Preso un valore T, tutti i valori inferiori a T verranno posti a 0, tutti i maggiori di T ad 1.
+
+0 = Nero = (0,0,0)
+1 = Bianco = (255,255,255)
+
+--- Valori di Contrasto ---
+
+Significa rendere più evidenti le differenze di colore.
+Si ottiene cambiando il valore di un pixel con uno più scuro o più chiaro.
+
+

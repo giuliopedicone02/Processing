@@ -1,0 +1,74 @@
+Quando la luce colpisce un oggetto, una parte viene assorbita ed una parte viene riflessa.
+Quella che viene riflessa, dà origine al colore percepito.
+
+--- Il sensore --- 
+
+L'energia che colpisce il sensore è trasformata in un impulso elettrico, successivamente digitalizzato.
+
+--- Scanner ---
+
+Utilizza un sensore  che viene spostato lungo la sorgente da digitalizzare.
+
+--- Sensori in linea ---
+
+Le macchine per fare la TAC usano dei sensori disposti in un'unica linea 
+
+--- Sensori in 2D array ---
+
+Nelle macchine fotografiche i sensori sono disposti in una matrice
+
+Il più diffuso è il sensore CCD (Charged Coupled Device)
+
+Quando esso viene colpito da un fotone assume una determinata (e limitata) carica elettrica.
+Il numero di celle per area di esposizione è un parametro di qualità della fotocamera misurato in MEGAPIXEL.
+
+Le cariche elettriche acquisite devono essere trasferite in una memoria digitale.
+La scansione avviene in C fasi (dove C è il numero delle colonne).
+
+Ad ogni fase viene trasferita la prima colonna della matrice e le restanti vengono shiftate di una colonna.
+
+
+--- CFA: Color Filter Array ---
+
+Poichè ogni cella memorizzerà solo un colore per volta e non una terna, occorre scegliere il metodo di memorizzazione ottimale.
+
+I due colori ottenuti saranno ottenuti per interpolazione dai pixel vicini.
+
+
+--- Bayern Pattern metodo di interpolazione migliore ---
+
+Rapporto RGB: 1:2:1 pixel verdi disposti nelle diagonali
+
+Formato per immagini che utilizzano il bayern pattern: .raw
+
+Se ogni pixel memorizza solo una componente di colore, le altre dovranno essere ottenute per interpolazione dai pixel vicini.
+
+--- Color interpolation o demosaicking ---
+
+La matrice di dati rilasciati dal sensore può essere visualizzata come un immagine in scala di grigi.
+
+Per ottenere un immagine a colori occorre prevedere con un algoritmo di color interpolation che ricava i valori mancanti per ogni singola terna.
+
+1) Replicazione
+
+Per ogni singolo pixel gli elementi mancanti della terna vengono copiati dall'intorno.
+Questa tecnica viene chiamata anche nearest-neighbor interpolation
+
+2.1) Bilineare (G conosciuto R e B da ricavare)
+
+Matrice R: non si deve fare nulla
+Matrice G e B: occorre ricavare i dati da un intorno selezionando i 4 valori rilasciati dal sensore
+
+2.2) Bilineare (R conosciuto G e B da ricavare)
+
+Matrice G: non si deve fare nulla
+Matrice R e B: occorre ricavare i dati da un intorno selezionando i 2 valori rilasciati dal sensore
+
+2.3) Bilineare (B conosciuto R e G da ricavare)
+
+Matrice B: non si deve fare nulla
+Matrice G e B: occorre ricavare i dati da un intorno selezionando i 4 valori rilasciati dal sensore
+
+
+
+

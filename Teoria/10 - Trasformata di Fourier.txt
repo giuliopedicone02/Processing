@@ -1,0 +1,162 @@
+--- Serie di Fourier --
+
+Funzione periodica che può essere espressa come somma di seni e/o coseni
+
+---Trasformata di Fourier ---
+
+Funzione non periodica espressa come integrali di seni e/o coseni moltiplicati per funzioni peso.
+
+La trasformata di Fourier permette di passare dal dominio originale a quello di Fourier in modo naturale e senza perdita di informazione.
+
+Vantaggi:
+- Sopprimere frequenze indesiderate
+- Ridurre lo spazio occupato dai dati
+- Rigenerare segnali degradati
+
+
+
+
+--- DFT Discrete Fourier Transorm ---
+
+A: ampiezza (si misura in Db)
+T: periodo (si misura in secondi)
+f: frequenza (numero di cicli al secondo - si misura in Hz)
+
+Formula Trasformata: vedi formulario
+Formula Antitrasformata: vedi formulario
+Spettro Trasformata: |F(u,v)| = sqrt(R^2(u,v)+I^2(u,v)) N.B: è la matrice dei moduli della trasformata
+Angolo di Fase: phi(u,v)=arctan(I(u,v)/R(u,v))
+Potenza Spettrale: P(u,v)=|F(u,v)|^2=R^2(u,v)+I^2(u,v)
+
+u,v: indici relativi agli assi delle frequenze discretizzati
+M,N: dimensioni dell'immagine in pixel
+
+--- Formula di Eulero ---
+
+e^(ix) = cos(x)+i*sen(x)
+e^(-ix) = cos(x)-i*sen(x)
+
+--- Esempio ---
+
++---+---+---+---+
+| 1 | 2 | 4 | 4 |
++---+---+---+---+
+
+u = 0, f(u) = f(0) = 1/4(f(0)+f(1)+f(2)+f(3))=1/4(1+2+4+4)=11/4 (valore medio)
+
+--- Proprietà della Trasformata di Fourier ---
+
+1. Separabilità
+2. Traslazione
+3. Valore Medio
+
+--- Separabilità ---
+
+La trasformata di Fourier discreta può essere espressa in forma separabile.
+Vantaggio: la F(u,v) può essere ottenuta applicando due volte la trasformata 1-D.
+
+--- Traslazione ---
+Utile per visualizzare meglio lo spettro delle frequenze.
+La Traslazione dell'antitrasformata f(x,y) non modifica la magnitudo della Trasformata F(x,y)
+La Trasformata non è sensibile alla traslazione (shift-invariant)
+
+--- Valore Medio ---
+
+Il valore della Trasformata nel punto (u,v)=(0,0) è equivalente alla media di f(x,y).
+
+N.B: F(0,0) prende il nome di componente continua o componente DC
+
+--- Teorema della Convoluzione ---
+
+La convoluzione di due segnali nel dominio spaziale equivale all'antitrasformata del prodotto delle frequenze
+
+Vantaggi:
+Si risparmia sulla complessità operazionale:
+
+Convoluzione O(n^2): f(x,y) (+) h(x,y) = g(x,y)
+				
+Trasformata O(n log n): F(u,v) * H(u,v) = G(u,v)
+
+Note:
+(+) simbolo della convoluzione
+f(x,y): Immagine
+h(x,y): Kernel
+g(x,y): Immagine filtrata - antitrasformata di G(u,v)
+F(u,v): Trasformata di f(x,y)
+H(u,v): Trasformata di h(x,y) detto anche filtro zerophaseshift (non introduce sfasamento)
+
+
+--- Come ottenere un filtro H partendo da un kernel h ---
+
+kernel h (3x3):
++----+----+----+
+| -1 | -2 | -1 |
++----+----+----+
+| 0  | 0  | 0  |
++----+----+----+
+| 1  | 2  | 1  |
++----+----+----+
+
+Filtro H (5x5):
++---+----+----+----+---+
+| 0 | 0  | 0  | 0  | 0 |
++---+----+----+----+---+
+| 0 | -1 | -2 | -1 | 0 |
++---+----+----+----+---+
+| 0 | 0  | 0  | 0  | 0 |
++---+----+----+----+---+
+| 0 | 1  | 2  | 1  | 0 |
++---+----+----+----+---+
+| 0 | 0  | 0  | 0  | 0 |
++---+----+----+----+---+
+
+Quante righe/colonne aggiungere?
+
+Formula: N(H)-N(h)/2 = 5-3/2 = 2/2 = 1
+Una riga di zeri sopra e sotto ed una colonna di zeri a sinistra e a destra
+
+Es:
+h: 3x3
+H: 7x7
+
+7-3/2 = 4/2 = 2
+Due righe di zeri sopra e sotto e due colonne di zeri a sinistra e a destra
+
+--- Frequenze low and high ---
+
+Basse frequenze: zone uniformi dell'immagine
+Alte frequenze: variazioni brusche come i bordi o rumore dell'immagine
+
+--- Filtri Low Pass, High Pass, Band-Reject ---
+
+Si dividono in Ideale, Butterworth e Gaussiani.
+Formule: Vedi Formulario
+
+Alcune notazioni:
+
+- Ideale
+PXQ: Dimensione immagine
+D0: Frequenza di taglio
+D(u,v) = Distanza di (u,v) dal centro = sqrt((u-P/2)^2+(v-Q/2)^2)
+
+- Butterworth
+n: Indica quanto rapidamente si passa da 1 a 0
+
+- Gaussiano
+La Trasformata di un filtro Gaussiano è sempre una gaussiana.
+
+--- Esempio di filtro low pass ---
+
+f = P X Q = 100 x 100
+D0 = Frequenza di taglio = 50
+
+D(0,0) = sqrt((0-50)^2+(0-50)^2)=sqrt(2500+2500)=sqrt(5000)=70.72
+H(0,0) = 0 (70.72 > D0 = 50)
+
+D(30,30) = sqrt((30-50)^2+(30-50)^2)=sqrt(400+400)=sqrt(800)=28
+H(30,30) = 1 (28 < D0 = 50)
+
+
+
+
+

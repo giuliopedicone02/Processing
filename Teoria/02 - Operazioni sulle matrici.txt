@@ -1,0 +1,158 @@
+Un' immagine digitale raster può essere rappresentata da una matrice.
+Su un'immagine è possibile fare tutte le operazioni possibili sulle matrici
+
+N.B: Prodotto puntuale (punto a punto) tra le due matrici
+
+1  2     -3  0      -3  0
+3 -1      1  4       3 -4
+
+--- Neighborhood - Vicini di pixel ---
+
+4 vicini: Pixel sopra, sotto, sinistro e destro
+8 vicini: i precedenti 4 + 4 pixel nelle diagonali
+
+--- Operazioni affini ---
+
+(v,w): pixel di input (dell' immagine originale)
+(x,y): pixel di output (dell' immagine trasformata)
+
+- Identità
+
+1  0  0
+0  1  0
+0  0  1
+
+Coordinate: x=v, y=w
+
+- Scaling (Ridimensionamento)
+
+cx  0   0
+0   cy  0
+0   0   1
+
+Coordinate: x=cx*v, y=cy*w
+
+- Rotation (Rotazione)
+
+cos(θ)    sin(θ)  0
+-sin(θ)   cos(θ)  0
+ 0          0     1
+
+Coordinate: x=v*cos(θ) - w*sin(θ), y=v*sin(θ) + w*cos(θ)
+
+- Translation (Traslazione)
+
+1  0  0
+0  1  0
+tx ty 1
+
+Coordinate: x=v+tx, y=w+ty
+
+- Shear (Distorsione) - Asse verticale
+
+1  0  0
+sv 1  0
+0  0  1
+
+Coordinate: x = v + sv*w, y = w
+
+- Shear (Distorsione) - Asse orizzontale
+
+1  sh  0
+0  1  0
+0  0  1
+
+Coordinate: x=v, y= sh*v+w
+
+--- Forward mapping (Assegnamento in avanti) ---
+
+[x y 1] = [v w 1]*T
+
+Consiste nel visitare i pixel dell'immagine di input e per ciascuna posizione (v,w) calcolare la corrispondente posizione spaziale (x,y)
+
+N.B: Potrebbe accadere che due o più pixel dell'imamgine di input siano assegnati alla stessa posizione spaziale dell'immagine di output
+oppure che qualche posizione dell'immagine di output non venga considerata. Soluzione: interpolazione.
+
+--- Inverse mapping (Assegnamento inverso) ---
+
+[v w 1] = [x y 1] * inversa(T)
+
+Visita le posizoni spaziali dei pixel di output (x,y) per calcolare le corrispondenti coordinate nell'immagine di input
+(Viene utilizzato in diversi prodotti commerciali come MATLAB)
+
+N.B: Sono possibili le combinazioni tra più operazioni affini.
+
+--- Interpolazione ---
+
+Processo che partendo da dati reali stima i dati non conosciuti.
+Non migliora la qualità dell'immagine ma ne stima i valori ignoti.
+
+------------- ZOOMING IN (ES: 2X) -------------
+
+
+--- Tipi di interpolazione 
+
+- Nearest Neighbor (Il "vicino" più vicino) o replication
+- Bilineare
+- Bicubica
+
+--- Replication o Nearest Neighbor
+
+Assegna a ogni nuova posizone l'intestità del pixel più prossimo nell'immagine originale
+
+--- Bilineare
+
+Nell'interpolazione bilineare si usano i quattro pixel più vicini per stimare l'intensità da assegnare a ciascuna nuova posizione.
+
+v(x,y): valore dell'intensità
+(x,y): coordinate della nuova posizione
+a,b,c,d: pixel vicini
+
+--- Bicubica
+
+L'interpolazione bicubica utilizza i sedici pixel vicini al punto.
+Il valore di intensità assegnato al punto si ottiene attraverso l'eqauzione:
+
+v(x,y) = Ʃ(i=0->3)*Ʃ(j=0->3)*a(ij)*x^i*y^j
+
+--- Cosa fare ai bordi? ---
+
+- Nulla
+- Replicare i valori delle righe e delle colonne isolate
+- Interpolare con i valori presenti anche se in numero minore
+
+
+
+v(x,y) = ax + by = cxy + d
+
+------------- ZOOMING OUT (ES: 0.5x) -------------
+
+--- Decimazione ---
+1) Ogni quattro pixel se ne sceglie uno
+2) Di quattro pixel ne calcoli il valore medio
+
+--- Stima della qualità di un algoritmo ---
+
+- MSE: Stima l'errore quadratico medio tra due immagini
+- PSNR: Misura la qualità di un immagine compressa rispetto all'originale, maggiore è il suo valore maggiore è la somiglianza con l'originale.
+
+Per calcolare il PSNR abbiamo bisogno dell'MSE
+Formule MSE e PSNR: Vedi formulario.
+
+--- MSE e PSNR per immagini RGB ---
+
+1) Media dei valori MSE (o PSNR) sui 3 canali
+2) Combinazione lineare che pesa maggiormente sulla colorazione verde (G)
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,113 @@
+Dato un segnale continuo occorre scegliere un numero finito di "campioni" rappresentativi del segnale.
+Il valore in ogni singolo punto è un numero reale ed occorre scegliere dei valori discreti per rappresentare correttamente il segnale.
+
+Un campionamento troppo basso fa perdere dettagli ed informazioni
+e può far apparire nella immagine dettagli NON PRESENTI nell’originale.
+
+Il segnale viene “alterato” e si parla di “aliasing”.
+
+--- Come scegliere il giusto campionamento? ---
+
+Si utilizza il teorema di Shannon, basato sul Nyquist Rate
+
+***Nyquist Rate***: Si definisce Nyquist rate il doppio della più alta frequenza in un segnale continuo e limitato.
+
+Serie di Fourier: serve per passare al dominio delle frequenze
+
+-- Teorema del campionamento di Shannon
+
+Se si raccolgono campioni con frequenza più alta del Nyquist rate il segnale può essere ricostruito FEDELMENTE in ogni suo punto!
+
+--- Campionamento corretto ---
+
+Es: Immagine di 720px x 720 px con dettaglio massimo di 4 pixel considerando i "tratti fini":
+Dividiamo l'intervallo in 720/4=180 ottenendo così la frequenza più alta.
+
+Nyquist rate: 2*freq più alta = 2*180 = 360
+
+--- Campionamento errato ---
+
+Es: Immagine di 720px x 720 px con dettaglio massimo di 6 pixel trascurando i "tratti fini":
+Dividiamo l'intervallo in 720/6=120 ottenendo così la frequenza più alta.
+
+Nyquist rate: 2*freq più alta = 2*120 = 240
+
+--- Sottocampionamento ---
+
+Cosa succede esattamente se si campiona a una frequenza inferiore a quella al Nyquistrate?
+Si perdono dei dettagli significativi e spesso si introducono nuovi dettagli che non sono presenti nella realtà.
+
+Questo fenomeno è detto *** frequency aliasing o aliasing ***
+
+--- Aliasing (o falsa identità) ---
+
+Le alte frequenze sono mascherate da basse frequenze e trattate come tali nella fase di campionamento.
+
+Es: Se si fosse trattato di una onda sonora un suono acuto sarebbe stato sostituito da un suono grave!
+
+--- Anti aliasing --- 
+
+L’aliasing può essere ridotto applicando una funzione di smussamento sul segnale originario prima del campionamento 
+
+
+------ QUANTIZZAZIONE ------
+
+I sensori sono apparecchiature analogiche: forniscono misure come numeri REALI.
+È necessario arrotondare tali valori e mantenerli in un certo range.
+Tale processo si chiama QUANTIZZAZIONE
+
+
+"Rumore" di un immagine: ERRORE a causa di difetti nel sensore o di perturbazioni termiche
+Viene causato anche dalla troppa vicinanza dei sensori che si disturbano tra loro.
+Ogni sensore ha un proprio rumore ed è possibile risalire alla fonte tramite questo.
+
+Dark current: Nei CCD (Charged Coupled Device) anche a obiettivo chiuso ci sono correnti parassite che inducono rumore dentro il dispositivo elettronico.
+
+--- Quantizzazione: procedura generale ---
+
+Se i valori da quantizzare sono numeri reali nel range [a, b] e si vuole quantizzare su n livelli:
+
+Supponendo livello t0 = a e tn = b
+
+Si fissano n+1 numeri tale che: a=t0<t1<t2<...<tn=b
+
+Un numero x appartenete ad [a,b] verrà assegnato al livello di quantizzazione k se risulta: tk <= x < tk+1
+
+--- Numero di bit per rappresentare la luminosità in un punto ---
+
+B = log(n) n=numero di livelli
+
+La quantizzazione effettuata dagli scanner e dalle fotocamere digitali è non uniforme e logaritmica: 
+ciò permette di assegnare più livelli nella area dei toni scuri e meno livelli nella area dei toni chiari.
+
+--- Quantizzazione uniforme ---
+
+L = livello di ingresso (intero)
+L' = livello corrispondente dopo la quantizzazione
+K = numero <= n (livelli in ingresso)
+
+Formula: L' = (L*K)/N
+
+
+Esempio:portare 0...255 in 0...7 con quantizzazione uniforme. 
+Il livello 10 diviene (10*8)/256 = 0
+Il livello 20 diviene (20*8)/256 = 0
+il livello 30 diviene (30*8)/256 = 0
+Il livello 32 diviene (32*8)/256 = 1 eccetera...
+
+
+--- Quantizzazione non uniforme ---
+
+Formula: L’ = f(L,N,K)
+
+La formula f può assumere diverse forme una tra le quali è la quantizzazione logaritmica
+
+--- Quantizzazione logaritmica ---
+
+Formula f(L,N,K) = (log2 (L)*K)/log2(N)
+
+
+
+
+
+

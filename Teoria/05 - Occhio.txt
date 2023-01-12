@@ -1,0 +1,94 @@
+La fovea (zona centrale della retina) è una regione di 1.5mm x 1.5 mm
+Ha una popolazione di circa 150k elementi per mm^2 per un totale di circa 337k.
+
+Un CCD riesce a contenere gli stessi fotoni in non meno di 5mm x 5mm.
+
+---Come si forma l’immagine nell’occhio?---
+
+--Modello PINHOLE--
+In tale modello teorico approssimiamo l'occhio con una scatola dove viene posizionata una pellicola sensibile alla luce e praticato un foro nella parete opposta
+--
+Formula del raggio: r=sqrt(λd)
+Il raggio del foro è proporzionale alla radice quadrata della distanza per la lunghezza d'onda della luce emessa
+----
+---Pinhole ideale e reale---
+-(ideale)Un punto luminoso (impulso) produce un punto se passa attraverso un pinhole ideale
+-(reale)Un punto luminoso (impulso) produce un’area (chiamata "POINT SPREAD FUNCTION")attraverso un pinhole reale
+---
+--Lenti sottili--
+Una lente sottile è definita da una proprietà geometrica così definita:
+a)raggi paralleli all'asse della lente vengono concentrati in un unico punto detto fuoco, posto a distanza F dalla lente
+b)raggi che si dipartono dal FUOCO vengono ri-trasmessi tutti paralleli nella direzione dell'asse della lente
+c)una lente sottile ha due fuochi equidistanti da essa
+
+-Un oggetto puntiforme, emette raggi luminosi in ogni direzione,solo uno passa per il fuoco e la lente lo farà passare in un raggio parallelo.
+Il punto in cui tutti i raggi si reincontrano è il punto di formazione dell'immagine
+----
+-- Equazione della lente sottile --
+
+Equazione: 1/f = 1/v + 1/u
+
+u: distanza tra l'oggetto e la lente
+v: distanza tra la lente e l'immagine
+f: distanza tra fuoco e lente (2f distanza tra i due fuochi)
+h: altezza tra immagine e fuoco
+k: altezza tra oggetto e fuoco
+
+--- Diottria ---
+
+Misura definita su 1/metro
+Lunghezza focale si misura in diottrie.
+
+Profondità di campo: fenomeno per il quale due oggetti differenti e comparabili non possono essere focalizzati contemporaneamente.
+
+--- Magnificazione ---
+
+Serve a studiare la relazione tra u (distanza tra oggetto e lente) e v (distanza tra lente ed immagine).
+
+m: fattore di magnificazione è dato da h/k=v/u
+
+f:um/(m+1)
+
+Per lo stesso principio h: 15/100 = h/17 => h = (15/100)*17 = 2.55mm
+
+---- Esempio 1 ----
+
+u: 1 cm
+v: 0.5 cm
+
+Se u'= 500cm quanto vale f?
+
+Calcoliamo il fattore di magnificazione m= h/k = v/u = 0.5/1 = 0.5
+
+Calcoliamo f: u'm/m+1 = 500*0.5/(0.5+1) = 0.5/1.5 = 166.6cm
+
+---- Esempio 2 ----
+
+u: 1 cm
+v: 2 cm
+
+Se u'= 5cm quanto vale f?
+
+Calcoliamo il fattore di magnificazione m = h/k = v/u = 2/1 = 2
+
+Calcoliamo f: u'm/m+1 = 5*2/(2+1) = 10/3 = 3.33cm
+
+---- Esempio 3 ----
+
+u: 1 cm
+v: 1 cm
+
+Se u'= 5cm quanto vale f?
+
+Calcoliamo il fattore di magnificazione m = h/k = v/u = 1/1 = 1
+
+Calcoliamo f: u'm/m+1 = 5*1/(1+1) = 5/2 = 2.5cm
+
+
+
+
+
+
+
+
+

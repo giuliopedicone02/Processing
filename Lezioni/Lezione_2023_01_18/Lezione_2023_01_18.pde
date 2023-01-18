@@ -103,123 +103,193 @@
 * RANGO, MEDIANO, MINIMO, MASSIMO
  */
 
-PImage Im, Imax, Imin, Imed;
+/*
+
+ PImage Im, Imax, Imin, Imed;
+ 
+ void setup()
+ {
+ size(1024, 1024);
+ Im=loadImage("lena.png");
+ Im.filter(GRAY);
+ 
+ Imax=massimo(Im, 11);
+ Imin=minimo(Im, 11);
+ Imed=mediano(Im, 11);
+ 
+ image(Im, 0, 0);
+ image(Imin, 512, 0);
+ image(Imax, 0, 512);
+ image(Imed, 512, 512);
+ }
+ 
+ void draw()
+ {
+ }
+ 
+ PImage minimo(PImage I, int N)
+ {
+ PImage R=createImage(I.width, I.height, RGB);
+ PImage tmp;
+ int off=N/2;
+ float[] tmpF;
+ int xs;
+ int ys;
+ 
+ for (int x=0; x<I.width; x++)
+ {
+ for (int y=0; y<I.height; y++)
+ {
+ xs=x-off;
+ ys=y-off;
+ 
+ tmp=I.get(max(0, xs), max(0, ys), min(N, min(N+xs, I.width-xs)), min(N, min(N+ys, I.height-ys)));
+ 
+ tmp.loadPixels();
+ 
+ tmpF=new float[tmp.pixels.length];
+ 
+ for (int i=0; i<tmp.pixels.length; i++)
+ {
+ tmpF[i]=green(tmp.pixels[i]);
+ }
+ 
+ R.set(x, y, color(min(tmpF))); //Trovo il minimo
+ }
+ }
+ 
+ return R;
+ }
+ 
+ PImage massimo(PImage I, int N)
+ {
+ PImage result=createImage(I.width, I.height, RGB);
+ PImage tmp;
+ int off=N/2;
+ float[] tmpF = new float[N*N];
+ 
+ for (int y=0; y<I.height; y++)
+ {
+ for (int x=0; x<I.width; x++)
+ {
+ tmp=I.get(x-off, y-off, N, N);
+ tmp.loadPixels();
+ 
+ for (int i=0; i<tmp.pixels.length; i++)
+ {
+ tmpF[i]=red(tmp.pixels[i]);
+ }
+ 
+ result.set(x, y, color(max(tmpF))); //trovo il massimo
+ }
+ }
+ 
+ return result;
+ }
+ 
+ PImage mediano(PImage I, int N)
+ {
+ PImage result=createImage(I.width, I.height, RGB);
+ PImage tmp;
+ int off=N/2;
+ float[] tmpF;
+ float med;
+ tmpF=new float[N*N];
+ 
+ for (int x=0; x<I.width; x++)
+ {
+ for (int y=0; y<I.height; y++)
+ {
+ 
+ tmp=I.get(x-off, y-off, N, N);
+ 
+ tmp.loadPixels();
+ 
+ for (int i=0; i<tmp.pixels.length; i++)
+ {
+ tmpF[i]=green(tmp.pixels[i]);
+ }
+ 
+ tmpF=sort(tmpF); //ordina l'array per effettuare l'operazione mediano
+ 
+ if ((N*N)%2==1) //Se la lunghezza dell'array è dispari...
+ med=tmpF[(N*N)/2];
+ else //Altrimenti...
+ {
+ med=(tmpF[(N*N)/2]+tmpF[(N*N)/2-1])/2;
+ }
+ 
+ result.set(x, y, color(med));
+ }
+ }
+ 
+ return result;
+ }
+ 
+ */
+
+/*
+* BIT PLANES
+ */
+
+PImage Im, Ib;
+int K;
 
 void setup()
 {
-  size(1024, 1024);
   Im=loadImage("lena.png");
   Im.filter(GRAY);
-
-  Imax=massimo(Im, 11);
-  Imin=minimo(Im, 11);
-  Imed=mediano(Im, 11);
-
+  size(1024, 512);
   image(Im, 0, 0);
-  image(Imin, 512, 0);
-  image(Imax, 0, 512);
-  image(Im, 512, 512);
+
+  K=7;
+  Ib=bitplane(Im, K);
+  image(Ib, 512, 0);
 }
 
 void draw()
 {
 }
 
-PImage minimo(PImage I, int N)
+PImage bitplane(PImage I, int nb)
 {
-  PImage R=createImage(I.width, I.height, RGB);
-  PImage tmp;
-  int off=N/2;
-  float[] tmpF;
-  int xs;
-  int ys;
+  PImage result=I.copy();
 
-  for (int x=0; x<I.width; x++)
+  result.loadPixels();
+
+  int x;
+  int r;
+
+  for (int i=0; i<result.pixels.length; i++)
   {
-    for (int y=0; y<I.height; y++)
-    {
-      xs=x-off;
-      ys=y-off;
+    x=int(blue(result.pixels[i]));
 
-      tmp=I.get(max(0, xs), max(0, ys), min(N, min(N+xs, I.width-xs)), min(N, min(N+ys, I.height-ys)));
+    r=(x>>nb)&1;
 
-      tmp.loadPixels();
-
-      tmpF=new float[tmp.pixels.length];
-
-      for (int i=0; i<tmp.pixels.length; i++)
-      {
-        tmpF[i]=green(tmp.pixels[i]);
-      }
-
-      R.set(x, y, color(min(tmpF))); //Trovo il minimo
-    }
+    result.pixels[i]=color(255*r);
   }
 
-  return R;
-}
-
-PImage massimo(PImage I, int N)
-{
-  PImage result=createImage(I.width, I.height, RGB);
-  PImage tmp;
-  int off=N/2;
-  float[] tmpF = new float[N*N];
-
-  for (int y=0; y<I.height; y++)
-  {
-    for (int x=0; x<I.width; x++)
-    {
-      tmp=I.get(x-off, y-off, N, N);
-      tmp.loadPixels();
-
-      for (int i=0; i<tmp.pixels.length; i++)
-      {
-        tmpF[i]=red(tmp.pixels[i]);
-      }
-
-      result.set(x, y, color(max(tmpF))); //trovo il massimo
-    }
-  }
-
+  result.updatePixels();
   return result;
 }
 
-PImage mediano(PImage I, int N)
+void keyPressed()
 {
-  PImage result=createImage(I.width, I.height, RGB);
-  PImage tmp;
-  int off=N/2;
-  float[] tmpF;
-  float med;
-  tmpF=new float[N*N];
+  println("Bitplane #"+K);
 
-  for (int x=0; x<I.width; x++)
+  if ((key=='+')&&(K<7))
   {
-    for (int y=0; y<I.height; y++)
-    {
-
-      tmp=I.get(x-off, y-off, N, N);
-
-      tmp.loadPixels();
-
-      for (int i=0; i<tmp.pixels.length; i++)
-      {
-        tmpF[i]=green(tmp.pixels[i]);
-      }
-
-      tmpF=sort(tmpF); //ordina l'array per effettuare l'operazione mediano
-
-      if ((N*N)%2==1) //Se la lunghezza dell'array è dispari...
-        med=tmpF[(N*N)/2];
-      else //Altrimenti...
-      {
-        med=(tmpF[(N*N)/2]+tmpF[(N*N)/2-1])/2;
-      }
-
-      result.set(x, y, color(med));
-    }
+    Ib=bitplane(Im, ++K);
+    image(Ib, 512, 0);
+  }
+  if ((key=='-')&&(K>0))
+  {
+    Ib=bitplane(Im, --K);
+    image(Ib, 512, 0);
   }
 
-  return result;
+  if (key=='r'||key=='R')
+  {
+    setup();
+  }
 }

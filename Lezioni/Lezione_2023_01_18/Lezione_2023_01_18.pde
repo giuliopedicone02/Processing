@@ -264,7 +264,7 @@ PImage bitplane(PImage I, int nb)
   {
     x=int(blue(result.pixels[i]));
 
-    r=(x>>nb)&1;
+    r=(x>>nb)&1; //And bit a bit
 
     result.pixels[i]=color(255*r);
   }

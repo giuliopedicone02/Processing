@@ -79,5 +79,166 @@ Il bit 1 si presenta 2 volte consecutivamente
 Il bit 0 si presenta 1 volta 
 Il bit 1 si presenta 6 volte consecutivamente
 
+--- Compressione Lossy ---
 
+Consiste nell'eliminare ciò che è percettivamente non importante.
+Si tratta di una compressione irreversibile.
+
+Esempio: Algoritmo di riquantizzazione
+
+Si tratta di un algoritmo di compressione che scarta i livelli di bit meno significativi.
+
+Red: 8 bit => 4 bit
+Green: 8 bit => 6 bit
+Blue: 8 bit => 2 bit
+
+Si passa da 24 a 12 bit, si risparmia il 50% di spazio ma si perdono enormi quantità di informazioni.
+
+--- Lo standard JPEG ---
+
+Compressione di tipo lossy suddivisa in 8 passaggi.
+
+*** 1. Trasformazione da spazio colore RGB a YCbCr ***
+
+Trasformazione reversibile che permette di lavorare sullo spazio luminanza-crominanza
+Lo spazio YCbCr produce un output composto solo da numeri positivi a differenza di YUV.
+
+*** 2. Sottocampionamento della crominanza ***
+
+La dimensione della luminanza resta invariata (MXN)
+
+Le due crominanze vengono sottocampionate scegliendo tramite interpolazione replication, un pixel su 4.
+Le dimensioni di Cb e Cr passano quindi da MxN ad (M/2) X (N/2)
+
+Si tratta di una trasformazione irreversibile!
+
+*** 3. Suddivisione delle immagini in sottoimmagini ***
+
+Si divide l'immagine originale in quadrotti 8x8 di 64 pixel totali.
+
+*** 4. DCT Discrete Cosine Transform ***
+
+Ad ogni quadrotto vengono shiftati 128 livelli di grigio, si avrà quindi:
+
+- 0 < x < 127 => [-128, -1]
+- x = 128 => {0}
+- 129 < x < 255 => [1, 127]
+
+La DCT è una Trasformazione che decorrela i dati permettendo maggiori rapporti di compressione tra quadrotti.
+
+Una volta eseguita la DCT sul nostro quadrotto possiamo notare le seguenti caratteristiche:
+
+- La matrice triangolare superiore avrà numeri sia positivi che negativi, molto distanti dallo zero
+- La matrice triangolare inferiore avrà numeri sia positivi che negativi, molto vicini allo zero
+- Il pixel in alto a sinistra (x,y)=(0,0) prenderà il nome di coefficiente DC (Media dei pixel presenti nell'immagine)
+- I restanti 63 pixel prenderanno il nome di coefficienti AC
+
+*** 5. Quantizzazione ***
+
+Si tratta di un processo irreversibile che permette di scegliere il grado di compressione dell'immagine.
+
+Formula: Fq = round(F/Q)
+
+Dove Q indica il fattore di quantizzazione ed è un numero che appartiene al range[0,100].
+
+N.B: Se Q=1 non si avrà alcun tipo di quantizzazione, maggiore è la Q peggiore sarà la qualità dell'immagine.
+
+*** 6-7. Codifica dei coefficienti DC/AC ed ordinamento a serpentina ***
+
+Tutti i valori presenti nella matrice 8X8 vengono ordinati in un array 64x1 seguendo un ordinamento a serpentina o a zig-zag.
+Questo permetterà di ottenere un array che inizia con un coefficiente DC seguito da 63 coefficienti AC.
+
+L'ordinamento a serpentina permette di ottenere un ordinamento che termina con una serie di zeri.
+L'inizio della serie di zeri prende il nome di EOB (End Of Block) dopo il quale non è più necessario codificare l'immagine.
+
+Es: 
+-24 12 5 3 0 42 -14 20 2 3 0 0 0 0 0 0 0 0 0 0 => -24 12 5 3 0 42 -14 20 2 3 EOB
+
+- I coefficienti DC vengono codificati tramite codifica differenziale
+- I coefficienti AC vengono codificati tramite codifica Run-Length
+
+*** 8. Codifica di Huffmann***
+
+--- Codifica dei coefficienti DC
+
+Es: Ipotizziamo che il coefficiente DC del primo quadrotto sia -26, ed il coefficiente del secondo quadrotto -17
+
+Δ = -26 - (-17) = -9
+
+-9 nella tabella presente a pagina 73, il valore di Δ=4 ha come SSSS(oppure n) il numero 4
+
+Il valore n=SSSS=4, nella tabella dei codici di Huffman presente a pagina 74, ha come Codice Base 101
+
+Otteniamo così il seguente codice:
+
++---+---+---+---+---+---+---+
+| 1 | 0 | 1 | ? | ? | ? | ? |
++---+---+---+---+---+---+---+
+
+Occorre completarlo, 
+sappiamo che n=SSSS=4 ovvero mancano 4 bit per ottenere il codice completo.
+
+Procediamo secondo il seguente procedimento:
+
+- Δ < 0: Aggiungiamo n bit meno significativi del valore in binario di Δ in complemento a 1
+- Δ = 0: Non facciamo nulla
+- Δ > 0: Aggiungiamo gli n bit meno significativi del valore in binario di Δ 
+
+Nel nostro esempio:
+
+Δ = -9 < 0 
+9 in binario è 1001 ed il suo complemento a 1 è 0110
+
++---+---+---+---+---+---+---+
+| 1 | 0 | 1 | 0 | 1 | 1 | 0 |
++---+---+---+---+---+---+---+
+
+--- Codifica dei coefficienti AC
+
+Data una sequenza di valori, si memorizza il numero degli zeri seguito dal primo valore non zero.
+
+Es: 0000 11 000 3 00000000 12 17 => (4,11)(3,3)(8,12)(0,17)
+
+Dove per ogni coppia (x,y) x indica il numero degli zeri antecedenti a y.
+
+Ipotizziamo una coppia (r,v) = (0,-3)
+
+Il coefficiente -3 nella tabella presente a pagina 79, ha come SSSS il valore 2.
+
+
+Alla coppia (r,SSSS) = (0,2) nella tabella presente a pagina 80 vengono associati:
+
+- Codice base: 01
+- Lunghezza codice completo: 4
+
+Otteniamo così il seguente codice:
+
++---+---+---+---+
+| 0 | 1 | ? | ? |
++---+---+---+---+
+
+Occorre completarlo,
+sappiamo che la lunghezza del codice completo è di 4 bit, mancano quindi 2 bit per ottenerlo.
+
+Procediamo secondo il seguente procedimento:
+
+- v < 0: Aggiungiamo n bit meno significativi del valore in binario di v in complemento a 1
+- v = 0: Non facciamo nulla
+- v > 0: Aggiungiamo gli n bit meno significativi del valore in binario di v 
+
+Nel nostro esempio:
+
+v = -3 < 0
+3 in binario è 011 ed il suo complemento a 1 è 100,
+consideriamo solo i suoi n bit meno significativi (00).
+
++---+---+---+---+
+| 0 | 1 | 0 | 0 |
++---+---+---+---+
+
+--- JPEG 2000 ---
+
+Differisce dalla compressione JPEG perchè sostituisce la DCT con le wavelets.
+Pur raggiungendo rapporti di compressione più elevati non è stato un successo commerciale per via dell'inerzia tecnologica.
+ 
 
